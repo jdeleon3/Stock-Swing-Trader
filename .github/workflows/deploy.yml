@@ -31,7 +31,6 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: GithubActionsStockSwingTrader
       - name: CDK Diff
-        run: cdk diff
         uses: aws-actions/aws-cdk@v2
         with:
           command: diff
