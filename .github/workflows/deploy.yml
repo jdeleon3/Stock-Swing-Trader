@@ -36,7 +36,6 @@ jobs:
         with:
           command: diff
       - name: CDK Deploy
-        run: cdk deploy
         uses: aws-actions/aws-cdk@v2
         with:
           command: deploy
