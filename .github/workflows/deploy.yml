@@ -19,10 +19,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.13.1
+      - name: Install Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          npm install -g aws-cdk
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -31,12 +36,14 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: GithubActionsStockSwingTrader
       - name: CDK Diff
-        uses: aws-actions/aws-cdk@v2
+        uses: youyo/aws-cdk-github-actions@v2
         with:
-          command: diff
+          cdk_subcommand: diff
+          actions_comment: true
       - name: CDK Deploy
-        uses: aws-actions/aws-cdk@v2
+        uses: youyo/aws-cdk-github-actions@v2
         with:
-          command: deploy
-          stack-name: StockSwingTrader
-          require-approval: never
+          cdk_subcommand: deploy
+          cdk_stack: StockSwingTrader
+          cdk_args: --require-approval never
+          actions_comment: false
